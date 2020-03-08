@@ -65,19 +65,39 @@
         </div>
     </div>
 
+    <div class="root">
+      <Search class="search" @loadStart="onLoadStart" @loadComplete="onLoadComplete"/>
+      <Result :items="items" :loadProgress="loadProgress"/>
+    </div>
+
   </div>
 </template>
 
 <script>
-// 初期モジュール
-// import HelloWorld from './components/HelloWorld.vue'
+import Search from "@/components/Search";
+import Result from "@/components/Result";
 
 export default {
-  name: 'App',
+  data() {
+    return {
+      items: [],
+      loadProgress: false,
+    };
+  },
+  methods: {
+    onLoadStart() {
+      this.loadProgress = true;
+    },
+    onLoadComplete({ results }) {
+      this.items = results;
+      this.loadProgress = false;
+    },
+  },
   components: {
-    // HelloWorld
-  }
-}
+    Search,
+    Result,
+  },
+};
 </script>
 
 <style>
